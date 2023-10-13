@@ -13,10 +13,10 @@ ROS2 package to visualize the robot kinematics with RVIZ for simulation or digit
 ## Install and Compile
 **Note:** Install [launch_utils](https://github.com/MonkyDCristian/launch_utils) in your workspace before follow this step
 ```
-cd <path to your workspace>
+cd <path to your workspace>/src/
 git clone https://github.com/Robotic-Neck/robotic_neck_viz.git
 cd ..
-colcon build --packages-select neck_mec_sim
+colcon build --packages-select robotic_neck_viz
 ```
 
 ## Install python3-pykdl dependencie
@@ -33,13 +33,13 @@ rosdep update
 ```
 Install dependencies  
 ```
-cd caleuche_ws/
+cd <path to your workspace>/
 rosdep install -i --from-path src --rosdistro humble -y
 ```
 
 ## Demo
 ```
-ros2 launch neck_meck_sim main.launch.py
+TODO
 ```
 
 ## Documentation
