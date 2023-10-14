@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="ouster_lidar" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="lid_cfg_file" value="$(find robotic_neck_viz)/config/lidar_urdf.yaml" />
+    <xacro:property name="lid_cfg" value="${xacro.load_yaml(lid_cfg_file)}"/>
+
+    <xacro:arg name="lidar_name"   default="${lid_cfg['lidar_name']}" />
+    <xacro:arg name="lidar_model"  default="${lid_cfg['lidar_model']}" />
+    <xacro:arg name="lid_base_frame"    default="${lid_cfg['base_frame']}" />
+    <xacro:arg name="lid_parent_frame"  default="${lid_cfg['parent_frame']}" />
+    <xacro:arg name="lid_pos_x"     default="${lid_cfg['lid_pos_x']}" />
+    <xacro:arg name="lid_pos_y"     default="${lid_cfg['lid_pos_y']}" />
+    <xacro:arg name="lid_pos_z"     default="${lid_cfg['lid_pos_z']}" />
+    <xacro:arg name="lid_roll"      default="${lid_cfg['lid_roll']}" />
+    <xacro:arg name="lid_pitch"     default="${lid_cfg['lid_pitch']}" />
+    <xacro:arg name="lid_yaw"       default="${lid_cfg['lid_yaw']}" />
+
+    <xacro:include filename="$(find robotic_neck_viz)/urdf/lidar/ouster_lidar.urdf.xacro"/>
+    <xacro:ouster_lidar lidar_name = "$(arg lidar_name)" parent = "$(arg lid_parent_frame)" lidar_model = "$(arg lidar_model)" base_frame = "$(arg lid_base_frame)" lid_pos_x = "$(arg lid_pos_x)" lid_pos_y = "$(arg lid_pos_y)" lid_pos_z = "$(arg lid_pos_z)" lid_roll = "$(arg lid_roll)" lid_pitch = "$(arg lid_pitch)" lid_yaw = "$(arg lid_yaw)"/>
+
+</robot>

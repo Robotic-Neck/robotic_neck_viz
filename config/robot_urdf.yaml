@@ -1,0 +1,3 @@
+lidar_enabled: "true"
+lidar_namespace: lidar/
+namespace: wamv

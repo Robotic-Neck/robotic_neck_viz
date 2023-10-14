@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!-- Basic WAM-V with gazebo plugins for dynamics -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robotic_neck">
+    
+    <link name="world"/>
+
+    <link name="base_link">
+      <visual>
+          <origin xyz="-0.015 0 -0.173" rpy="0 0 ${pi}"/>
+          <geometry>
+              <mesh filename="package://robotic_neck_viz/urdf/models/base/mesh/base.dae" />
+          </geometry>
+      </visual>
+    </link>
+
+     <joint name="base_link_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.1635" rpy="0 0 0" />
+    </joint>
+
+    <xacro:include filename="$(find robotic_neck_viz)/urdf/cross_piece.xacro"/>
+    <xacro:cross_piece name="main" parent="base_link" rot1="pitch" rot2="roll" pitch2roll="1"/>
+    
+    <link name="platform">
+     <visual>
+          <origin xyz="-0.025 0 0" rpy="0 0 ${pi/2}"/>
+          <geometry>
+              <mesh filename="package://robotic_neck_viz/urdf/models/platform/mesh/platform.dae"/>
+          </geometry>
+      </visual>
+    </link>
+
+    <joint name="platform_joint" type="fixed">
+      <parent link="main_cross_piece_roll"/>
+      <child link="platform"/>
+      <origin xyz="0 0 0.0115"/>
+    </joint>
+
+    <xacro:include filename="$(find robotic_neck_viz)/urdf/linear_actuator.xacro"/>
+    <xacro:linear_actuator name="right" side="-1"/>
+    <xacro:linear_actuator name="left" side="1"/>
+   
+</robot>

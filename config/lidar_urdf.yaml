@@ -1,0 +1,10 @@
+lidar_name:   ouster
+lidar_model:  OS0
+base_frame:   ouster_frame
+parent_frame: wamv/base_link
+lid_pos_x:    "0.55"
+lid_pos_y:    "0.0"
+lid_pos_z:    "1.818"
+lid_roll:     "0.0"
+lid_pitch:    "0.0"
+lid_yaw:      "0.0"

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="ouster_lidar" params="lidar_name lidar_model parent base_frame 
+                                           lid_pos_x lid_pos_y lid_pos_z 
+                                           lid_roll lid_pitch lid_yaw">
+    
+    <xacro:property name="model" value="${lidar_model}" />
+  
+    <!-- base_link of the sensor-->
+    <link name="${base_frame}"/>
+
+    <joint name="${lidar_name}_center_joint" type="fixed">
+        <parent link="${parent}"/>
+        <child link="${base_frame}"/>
+        <origin xyz="${lid_pos_x} ${lid_pos_y} ${lid_pos_z}" rpy="${lid_roll} ${lid_pitch} ${lid_yaw}" />
+    </joint>
+
+    <!-- roll rotation joint -->
+    <link name="roll_rot_${base_frame}"/>
+
+    <joint name="roll_rot_${base_frame}_joint" type="continuous">
+      <parent link="${base_frame}"/>
+      <child link="roll_rot_${base_frame}"/>
+      <axis xyz="1 0 0"/>
+      <origin xyz="0 0 0"/>
+    </joint>
+   
+    <!-- pitch rotation joint -->
+    <link name="pitch_rot_${base_frame}"/>
+
+    <joint name="pitch_rot_${base_frame}_joint" type="continuous">
+      <parent link="roll_rot_${base_frame}"/>
+      <child link="pitch_rot_${base_frame}"/>
+      <axis xyz="0 1 0"/>
+      <origin xyz="0 0 0"/>
+    </joint>
+
+    <!-- device Center -->
+    <link name="${lidar_name}_model_origin">
+        <visual>
+            <origin xyz="0 0 -0.005" rpy="0 0 1.5708"/>
+            <geometry>
+                <mesh filename="package://caleuche_viz/urdf/models/lidar/mesh/ouster_lidar.dae" />
+            </geometry>
+        </visual>
+        <collision name="${lidar_name}_collision">
+          <geometry>
+            <cylinder radius="0.055" length="0.075"/>
+          </geometry>
+        </collision>
+        <inertial>
+          <mass value="1"/>
+          <inertia ixx="0.00109375" iyy="0.00109375" izz="0.00125" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+
+    <joint name="${lidar_name}_model_origin_joint" type="fixed">
+        <parent link="pitch_rot_${base_frame}"/>
+        <child link="${lidar_name}_model_origin"/>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+
+  </xacro:macro>
+</robot>
