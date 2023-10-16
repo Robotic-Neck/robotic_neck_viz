@@ -2,7 +2,7 @@
 ROS2 package to visualize the robot kinematics with RVIZ for simulation or digital using TF2 and URDF.
 
 <p align="center">
-  <img width="640" height="380" src="/docs/imgs/digital_twin.png">
+  <img width="640" height="380" src="/docs/imgs/digital_twin.jpeg">
 </p>
 
 ## Dependencies
