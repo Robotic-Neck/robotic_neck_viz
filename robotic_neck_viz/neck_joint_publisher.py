@@ -47,7 +47,7 @@ class NeckJointPublisher(Node):
         self.left_actuator_roll = 0.0
         self.left_actuator_pitch = 0.0
         
-        self.actuator_lentgh_init = 0.149
+        self.actuator_lentgh_init = 0.1645
         
         self.msg = JointState()
         self.msg.name = ["main_cross_piece_pitch_joint", "main_cross_piece_roll_joint",
@@ -101,9 +101,9 @@ class NeckJointPublisher(Node):
     
 
     def set_chains(self):
-        self.chains = {"right": {"vectors":[[0.075, 0.05, 0.1505], [0, 0, 0], [-0.075, -0.05, -0.0015]], 
+        self.chains = {"right": {"vectors":[[0.075, 0.05, 0.166], [0, 0, 0], [-0.075, -0.05, -0.0015]],  # 0.166 is the z offset between the main cross piece and the right cross piece actuator base. = 172 + 11.5 - 13 - 4 - 0.5.
                                  "joints":[Joint.RotZ, Joint.RotY, Joint.RotX]},
-                        "left": {"vectors":[[0.075, -0.05, 0.1505], [0, 0, 0], [-0.075, 0.05, -0.0015]],
+                        "left": {"vectors":[[0.075, -0.05, 0.166], [0, 0, 0], [-0.075, 0.05, -0.0015]],
                                  "joints":[Joint.RotZ, Joint.RotY, Joint.RotX]}}
         
         self.define_chain(self.chains["right"])

@@ -20,14 +20,14 @@
     <joint name="${name}_up_tensor_joint" type="fixed">
         <parent link="${name}_holder"/>
         <child link="${name}_up_tensor"/>
-        <origin xyz="0 0 -0.013" rpy="0 0 0" />
+        <origin xyz="0 0 -0.0175" rpy="0 0 0" /> <!-- half universal join = 13 mm, nut = 4 mm, whasher = 0.5 mm -->
     </joint>
 
     <link name="${name}_down_tensor"/>
     <joint name="${name}_down_tensor_joint" type="fixed">
         <parent link="${name}_base"/>
         <child link="${name}_down_tensor"/>
-        <origin xyz="0 0 0.013" rpy="0 0 0" />
+        <origin xyz="0 0 0.0175" rpy="0 0 0" /> <!-- half universal join = 13 mm, nut = 4 mm, whasher = 0.5 mm -->
     </joint>
 
     <xacro:include filename="$(find robotic_neck_viz)/urdf/cross_piece.xacro"/>
@@ -57,7 +57,7 @@
     <joint name="${name}_linear_actuator_tube_joint" type="prismatic">
         <parent link="${name}_linear_actuator_axis"/>
         <child link="${name}_linear_actuator_tube"/>
-        <origin xyz="0 0 0.149" rpy="0 0 0"/>
+        <origin xyz="0 0 0.1645" rpy="0 0 0"/> <!-- origin tensor len = (pilar_len(172) + UJ_p(23) + nut(4) + whasher(5)))-(universal join(26) + 2*(nut(4) + whasher(5)))-= 172 - 3 - 4.5- = 164,5 mm -->
         <axis xyz="0 0 1"/>
         <limit lower="-0.017" upper="0.063" effort="100" velocity="0.01"/>
     </joint>
