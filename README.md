@@ -39,8 +39,21 @@ rosdep install -i --from-path src --rosdistro humble -y
 
 ## Demo
 ```
-TODO
+ros2 launch robotic_neck_viz robotic_neck_urdf.launch.py
 ```
+Now you can control the platform orientantation by rqt_reconfig.
+
+<p align="left">
+  <img width="480" height="270" src="/docs/imgs/rqt_reconfig.png">
+</p>
 
 ## Documentation
-TODO
+
+The IK are getting using the [Python Kinematics and Dynamics Library](https://packages.ubuntu.com/focal/python3-pykdl) in the [neck_joint_publisher](/robotic_neck_viz/neck_joint_publisher.py) node. 
+This node publish the [JointState](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/JointState.html), which have a list of the names of the joints and their revolution (in radians) or prismatic (in meter) positions.
+
+<p align="left">
+  <img width="270" height="480" src="/docs/imgs/joint_msg.png">
+</p>
+
+If you want to learn how set roll and pirch parameters by code you can check this [tutorial](https://roboticsbackend.com/ros2-global-parameters/) about global paramters.
