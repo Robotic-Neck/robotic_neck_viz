@@ -9,7 +9,7 @@ data_files = [('share/ament_index/resource_index/packages', ['resource/' + packa
 folder_file_dir = {'launch':'.launch.py','config':'.y*', 'rviz':'.rviz', 'urdf':'all'}
 
 data_files = add_data_files(data_files, package_name, folder_file_dir)
-entry_points = add_entry_points(['neck_mec_sim', 'tensor_len_sim', 'laser_sim', 'inverse_kinematics', 'neck_joint_publisher'], package_name)
+entry_points = add_entry_points(['neck_target_joint_publisher', 'neck_state_joint_publisher'], package_name)
 
 setup(
     name=package_name,

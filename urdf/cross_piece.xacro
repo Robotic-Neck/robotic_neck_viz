@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="cross_piece" params="name parent rot1 rot2 pitch2roll">
+  <xacro:macro name="cross_piece" params="name namespace parent rot1 rot2 pitch2roll">
     
-    <link name="${name}_cross_piece_${rot1}">
+    <link name="${namespace}/${name}_cross_piece_${rot1}">
       <visual>
           <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
           <geometry>
@@ -11,17 +11,17 @@
       </visual>
     </link>
 
-    <joint name="${name}_cross_piece_${rot1}_joint" type="continuous">
+    <joint name="${namespace}/${name}_cross_piece_${rot1}_joint" type="continuous">
       <parent link="${parent}"/>
-      <child link="${name}_cross_piece_${rot1}"/>
+      <child link="${namespace}/${name}_cross_piece_${rot1}"/>
       <axis xyz="${1 - pitch2roll} ${pitch2roll} 0"/>
     </joint>
     
-    <link name="${name}_cross_piece_${rot2}"/>
+    <link name="${namespace}/${name}_cross_piece_${rot2}"/>
 
-    <joint name="${name}_cross_piece_${rot2}_joint" type="continuous">
-      <parent link="${name}_cross_piece_${rot1}"/>
-      <child link="${name}_cross_piece_${rot2}"/>
+    <joint name="${namespace}/${name}_cross_piece_${rot2}_joint" type="continuous">
+      <parent link="${namespace}/${name}_cross_piece_${rot1}"/>
+      <child link="${namespace}/${name}_cross_piece_${rot2}"/>
       <axis xyz="${pitch2roll} ${1 - pitch2roll} 0"/>
     </joint>
 
