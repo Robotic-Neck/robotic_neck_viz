@@ -8,7 +8,6 @@
 import numpy as np
 import rclpy
 
-
 from rclpy.node import Node
 from rclpy.parameter import ParameterType
 
@@ -17,6 +16,7 @@ from PyKDL import Chain, Segment, JntArray, Joint, Frame, Vector, ChainFkSolverP
 from tf_transformations import quaternion_from_euler, euler_from_quaternion
 from rcl_interfaces.msg import ParameterDescriptor, SetParametersResult, IntegerRange
 
+from std_msgs.msg import Float32
 from sensor_msgs.msg import JointState
 
 class NeckJointPublisher(Node):
@@ -25,9 +25,12 @@ class NeckJointPublisher(Node):
     """
     def __init__(self):
         super().__init__('neck_Joint_publisher')
+        
         self.set_params()
         self.config_params()
         self.add_on_set_parameters_callback(self.parameters_callback)
+
+        self.set_connections()
        
         self.set_chains()
         
@@ -84,6 +87,19 @@ class NeckJointPublisher(Node):
             integer_range=[IntegerRange(from_value=-60, to_value=60, step=1)])
         self.declare_parameter(name="pitch", value=0, descriptor=pitch_param_descriptor)
 
+  
+    def set_connections(self):
+        self.roll_sub = self.create_subscription(Float32, '/rpip/roll', self.roll_callback, 10)
+        self.pitch_sub = self.create_subscription(Float32, '/rpip/pitch', self.pitch_callback, 10)
+
+   
+    def roll_callback(self, msg):
+        self.roll = msg.data
+    
+   
+    def pitch_callback(self, msg):
+        self.pitch = msg.data
+
 
     def parameters_callback(self, params):
         for param in params:
@@ -93,9 +109,6 @@ class NeckJointPublisher(Node):
             
             elif param.name == 'pitch':
                 self.pitch = np.deg2rad(param.value)
-        
-        self.right_actuator_lentgh, self.right_actuator_roll, self.right_actuator_pitch = self.get_actuator_lentgh(self.chains["right"])
-        self.left_actuator_lentgh, self.left_actuator_roll, self.left_actuator_pitch = self.get_actuator_lentgh(self.chains["left"])
         
         return SetParametersResult(successful=True)
     
@@ -151,8 +164,11 @@ class NeckJointPublisher(Node):
 
 
     def publish_joint_states(self):
-        self.msg.header.stamp = self.get_clock().now().to_msg()
+        self.right_actuator_lentgh, self.right_actuator_roll, self.right_actuator_pitch = self.get_actuator_lentgh(self.chains["right"])
+        self.left_actuator_lentgh, self.left_actuator_roll, self.left_actuator_pitch = self.get_actuator_lentgh(self.chains["left"])
 
+        self.msg.header.stamp = self.get_clock().now().to_msg()
+        
         self.msg.position = [self.pitch, self.roll, 
                              self.right_actuator_roll, self.right_actuator_pitch, 
                              self.right_actuator_lentgh, 0.0, 
