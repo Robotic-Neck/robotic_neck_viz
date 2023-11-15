@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- Basic WAM-V with gazebo plugins for dynamics -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="robotic_neck">
+    
+    <xacro:include filename="$(find robotic_neck_viz)/urdf/robotic_neck.xacro"/>
+    <xacro:robotic_neck namespace="state" color="_white"/>
+    
+</robot>
