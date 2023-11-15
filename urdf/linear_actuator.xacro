@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:macro name="linear_actuator" params="name side">
+  <xacro:macro name="linear_actuator" params="name namespace side color">
     
-    <link name="${name}_base"/>
-    <joint name="${name}_base_joint" type="fixed">
+    <link name="${namespace}/${name}_base"/>
+    <joint name="${namespace}/${name}_base_joint" type="fixed">
         <parent link="world"/>
-        <child link="${name}_base"/>
+        <child link="${namespace}/${name}_base"/>
         <origin xyz="-0.075 ${side*0.05} 0" rpy="0 0 0" />
     </joint>
 
-    <link name="${name}_holder"/>
-    <joint name="${name}_holder_joint" type="fixed">
-        <parent link="platform"/>
-        <child link="${name}_holder"/>
+    <link name="${namespace}/${name}_holder"/>
+    <joint name="${namespace}/${name}_holder_joint" type="fixed">
+        <parent link="${namespace}/platform"/>
+        <child link="${namespace}/${name}_holder"/>
         <origin xyz="-0.075 ${side*0.05} 0" rpy="0 0 0" />
     </joint>
 
-    <link name="${name}_up_tensor"/>
-    <joint name="${name}_up_tensor_joint" type="fixed">
-        <parent link="${name}_holder"/>
-        <child link="${name}_up_tensor"/>
+    <link name="${namespace}/${name}_up_tensor"/>
+    <joint name="${namespace}/${name}_up_tensor_joint" type="fixed">
+        <parent link="${namespace}/${name}_holder"/>
+        <child link="${namespace}/${name}_up_tensor"/>
         <origin xyz="0 0 -0.0175" rpy="0 0 0" /> <!-- half universal join = 13 mm, nut = 4 mm, whasher = 0.5 mm -->
     </joint>
 
-    <link name="${name}_down_tensor"/>
-    <joint name="${name}_down_tensor_joint" type="fixed">
-        <parent link="${name}_base"/>
-        <child link="${name}_down_tensor"/>
+    <link name="${namespace}/${name}_down_tensor"/>
+    <joint name="${namespace}/${name}_down_tensor_joint" type="fixed">
+        <parent link="${namespace}/${name}_base"/>
+        <child link="${namespace}/${name}_down_tensor"/>
         <origin xyz="0 0 0.0175" rpy="0 0 0" /> <!-- half universal join = 13 mm, nut = 4 mm, whasher = 0.5 mm -->
     </joint>
 
     <xacro:include filename="$(find robotic_neck_viz)/urdf/cross_piece.xacro"/>
-    <xacro:cross_piece name="${name}_down" parent="${name}_down_tensor" rot1="roll" rot2="pitch" pitch2roll="0"/>
+    <xacro:cross_piece name="${name}_down" namespace="${namespace}" parent="${namespace}/${name}_down_tensor" rot1="roll" rot2="pitch" pitch2roll="0"/>
 
-    <link name="${name}_linear_actuator_axis">
+    <link name="${namespace}/${name}_linear_actuator_axis">
       <visual>
           <origin xyz="0 0 0" rpy="${-pi/2} ${-pi/2} 0"/>
           <geometry>
-              <mesh filename="package://robotic_neck_viz/urdf/models/linear_actuator_axis/mesh/linear_atuator_axis.dae" />
+              <mesh filename="package://robotic_neck_viz/urdf/models/linear_actuator_axis${color}/mesh/linear_actuator_axis${color}.dae" />
           </geometry>
       </visual>
     </link>
-    <joint name="${name}_linear_actuator_axis_joint" type="fixed">
-        <parent link="${name}_down_cross_piece_pitch"/>
-        <child link="${name}_linear_actuator_axis"/>
+    <joint name="${namespace}/${name}_linear_actuator_axis_joint" type="fixed">
+        <parent link="${namespace}/${name}_down_cross_piece_pitch"/>
+        <child link="${namespace}/${name}_linear_actuator_axis"/>
     </joint>
 
-    <link name="${name}_linear_actuator_tube">
+    <link name="${namespace}/${name}_linear_actuator_tube">
       <visual>
           <origin xyz="0 0 0" rpy="${pi/2} ${-pi/2} 0"/>
           <geometry>
-              <mesh filename="package://robotic_neck_viz/urdf/models/linear_actuator_tube/mesh/linear_atuator_tube.dae" />
+              <mesh filename="package://robotic_neck_viz/urdf/models/linear_actuator_tube${color}/mesh/linear_actuator_tube${color}.dae" />
           </geometry>
       </visual>
     </link>
-    <joint name="${name}_linear_actuator_tube_joint" type="prismatic">
-        <parent link="${name}_linear_actuator_axis"/>
-        <child link="${name}_linear_actuator_tube"/>
+    <joint name="${namespace}/${name}_linear_actuator_tube_joint" type="prismatic">
+        <parent link="${namespace}/${name}_linear_actuator_axis"/>
+        <child link="${namespace}/${name}_linear_actuator_tube"/>
         <origin xyz="0 0 0.1645" rpy="0 0 0"/> <!-- origin tensor len = (pilar_len(172) + UJ_p(23) + nut(4) + whasher(5)))-(universal join(26) + 2*(nut(4) + whasher(5)))-= 172 - 3 - 4.5- = 164,5 mm -->
         <axis xyz="0 0 1"/>
         <limit lower="-0.017" upper="0.063" effort="100" velocity="0.01"/>
     </joint>
 
-    <xacro:cross_piece name="${name}_up" parent="${name}_linear_actuator_tube" rot1="pitch" rot2="roll" pitch2roll="1"/>
+    <xacro:cross_piece name="${name}_up" namespace="${namespace}" parent="${namespace}/${name}_linear_actuator_tube" rot1="pitch" rot2="roll" pitch2roll="1"/>
 
   </xacro:macro>
 </robot>
