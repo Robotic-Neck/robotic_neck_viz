@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="depthai_camera" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="cam_cfg_file" value="$(find robotic_neck_viz)/config/camera_urdf.yaml" />
+    <xacro:property name="cam_cfg" value="${xacro.load_yaml(cam_cfg_file)}"/>
+
+    <xacro:arg name="camera_name"   default="${cam_cfg['camera_name']}" />
+    <xacro:arg name="camera_model"  default="${cam_cfg['camera_model']}" />
+    <xacro:arg name="cam_base_frame"    default="${cam_cfg['base_frame']}" />
+    <xacro:arg name="cam_parent_frame"  default="${cam_cfg['parent_frame']}" />
+    <xacro:arg name="cam_pos_x"     default="${cam_cfg['cam_pos_x']}" />
+    <xacro:arg name="cam_pos_y"     default="${cam_cfg['cam_pos_y']}" />
+    <xacro:arg name="cam_pos_z"     default="${cam_cfg['cam_pos_z']}" />
+    <xacro:arg name="cam_roll"      default="${cam_cfg['cam_roll']}" />
+    <xacro:arg name="cam_pitch"     default="${cam_cfg['cam_pitch']}" />
+    <xacro:arg name="cam_yaw"       default="${cam_cfg['cam_yaw']}" />
+
+    <xacro:include filename="$(find caleuche_viz)/urdf/components/camera/depthai_camera.urdf.xacro"/>
+    <xacro:depthai_camera camera_name = "$(arg camera_name)" parent = "$(arg cam_parent_frame)" camera_model = "$(arg camera_model)" base_frame = "$(arg cam_base_frame)" cam_pos_x = "$(arg cam_pos_x)" cam_pos_y = "$(arg cam_pos_y)" cam_pos_z = "$(arg cam_pos_z)" cam_roll = "$(arg cam_roll)" cam_pitch = "$(arg cam_pitch)" cam_yaw = "$(arg cam_yaw)"/>
+
+</robot>

@@ -1,0 +1,10 @@
+camera_name:  oak
+camera_model: OAK-D-LITE
+base_frame:   oak-d_frame
+parent_frame: state/platform
+cam_pos_x:    "0.047"
+cam_pos_y:    "0.0"
+cam_pos_z:    "0.067"
+cam_roll:     "0.0"
+cam_pitch:    "0.0"
+cam_yaw:      "0.0"

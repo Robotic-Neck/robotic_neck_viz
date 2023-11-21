@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Basic WAM-V with gazebo plugins for dynamics -->
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="robotic_neck" params="namespace color">
+      <!-- ADD BASE LINK-->
+      <link name="world"/>
+
+      <link name="base_link">
+        <visual>
+            <origin xyz="-0.015 0 -0.193" rpy="0 0 ${pi}"/>
+            <geometry>
+                <mesh filename="package://robotic_neck_viz/urdf/models/base/mesh/base.dae" />
+            </geometry>
+        </visual>
+      </link>
+
+      <joint name="base_link_joint" type="fixed">
+          <parent link="world"/>
+          <child link="base_link"/>
+          <origin xyz="0 0 0.1835" rpy="0 0 0" />
+      </joint>
+
+      <xacro:include filename="$(find robotic_neck_viz)/urdf/cross_piece.xacro"/>
+      <xacro:cross_piece name="main" namespace="${namespace}" parent="base_link" rot1="pitch" rot2="roll" pitch2roll="1"/>
+      
+      <!-- ADD PLATFORM-->
+      <link name="${namespace}/platform">
+      <visual>
+            <origin xyz="-0.025 0 0" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="package://robotic_neck_viz/urdf/models/platform${color}/mesh/platform${color}_h.dae"/>
+            </geometry>
+        </visual>
+      </link>
+
+      <joint name="${namespace}/platform_joint" type="fixed">
+        <parent link="${namespace}/main_cross_piece_roll"/>
+        <child link="${namespace}/platform"/>
+        <origin xyz="0 0 0.016"/> <!-- half universal join = 11,5 mm, nut = 4 mm, whasher = 0.5 mm -->
+      </joint>
+
+      <!-- ADD LINEAR ACTUATOR -->
+      <xacro:include filename="$(find robotic_neck_viz)/urdf/linear_actuator.xacro"/>
+      <xacro:linear_actuator name="right" namespace="${namespace}" side="-1" color="${color}"/>
+      <xacro:linear_actuator name="left" namespace="${namespace}" side="1" color="${color}"/>
+
+      <!-- ADD DEPTHAI CAMERA -->
+      <xacro:include filename="$(find robotic_neck_viz)/urdf/camera/depthai_camera.xacro"/>
+    </xacro:macro>
+</robot>

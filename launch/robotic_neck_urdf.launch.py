@@ -1,7 +1,7 @@
 from launch import LaunchDescription
 from launch_ros.actions import Node
 
-from launch_utils.utils import launch_rviz_node
+from launch_utils.utils import launch_rviz_node, include_launch
 from launch_utils.utils import launch_robot_state_publisher_node as launch_rsp_node
 
 
