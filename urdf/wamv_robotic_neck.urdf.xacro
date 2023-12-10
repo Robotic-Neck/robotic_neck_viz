@@ -4,19 +4,15 @@
   <xacro:property name="cfg_file" value="$(find robotic_neck_viz)/config/robot_urdf.yaml" />
   <xacro:property name="cfg" value="${xacro.load_yaml(cfg_file)}"/>
 
-  <xacro:arg name="lidar_enabled" default="${cfg['lidar_enabled']}" />
-  <xacro:arg name="lidar_namespace" default="${cfg['lidar_namespace']}"/>
   <xacro:arg name="namespace" default="${cfg['namespace']}"/>
 
-  <xacro:property name="lidar_namespace" value="$(arg lidar_namespace)" scope="global" />
   <xacro:property name="namespace" value="$(arg namespace)" scope="global" />
 
   <!-- === The WAM-V platform === -->
   <xacro:include filename="$(find caleuche_viz)/urdf/components/wamv/wamv.urdf.xacro"/>
 
-  <!-- Add 3D LIDAR -->
-  <xacro:if value="$(arg lidar_enabled)">
-    <xacro:include filename="$(find robotic_neck_viz)/urdf/lidar/ouster_lidar.xacro"/>
-  </xacro:if>
+  <!-- === ADD Robotic Neck === -->
+  <xacro:include filename="$(find robotic_neck_viz)/urdf/robotic_neck_cam.xacro"/>
+  <xacro:robotic_neck namespace="state" color="_white" parent_frame="wamv/base_link" x="0.55" z="1.5"/>
 
 </robot>

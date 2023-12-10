@@ -2,7 +2,7 @@
 <!-- Basic WAM-V with gazebo plugins for dynamics -->
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="robotic_neck">
     
-    <xacro:arg name="camera_enabled" default="false"/>
+    <xacro:arg name="camera_enabled" default="true"/>
 
     <xacro:if value="$(arg camera_enabled)">
         <xacro:include filename="$(find robotic_neck_viz)/urdf/robotic_neck_cam.xacro"/>
@@ -11,7 +11,8 @@
     <xacro:unless value="$(arg camera_enabled)">
         <xacro:include filename="$(find robotic_neck_viz)/urdf/robotic_neck.xacro"/>
     </xacro:unless>
-
-    <xacro:robotic_neck namespace="state" color="_white"/>
+    
+    <link name="world"/>
+    <xacro:robotic_neck namespace="state" color="_white" parent_frame="world"/>
     
 </robot>

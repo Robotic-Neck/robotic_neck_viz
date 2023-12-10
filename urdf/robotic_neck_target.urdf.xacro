@@ -3,6 +3,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="robotic_neck">
     
     <xacro:include filename="$(find robotic_neck_viz)/urdf/robotic_neck.xacro"/>
-    <xacro:robotic_neck namespace="target" color=""/>
+    <link name="world"/>
+    <xacro:robotic_neck namespace="target" color="" parent_frame="world"/>
     
 </robot>

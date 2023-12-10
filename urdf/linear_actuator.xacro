@@ -4,9 +4,9 @@
     
     <link name="${namespace}/${name}_base"/>
     <joint name="${namespace}/${name}_base_joint" type="fixed">
-        <parent link="world"/>
+        <parent link="${namespace}/base_link"/>
         <child link="${namespace}/${name}_base"/>
-        <origin xyz="-0.075 ${side*0.05} 0" rpy="0 0 0" />
+        <origin xyz="-0.075 ${side*0.05} -0.1835" rpy="0 0 0" />
     </joint>
 
     <link name="${namespace}/${name}_holder"/>
